@@ -1,12 +1,38 @@
-type Request {
-	Name string `path:"name,options=you|me"`
-}
-
-type Response {
-	Message string `json:"message"`
-}
-
 service core-api {
-	@handler CoreHandler
-	get /from/:name(Request) returns (Response)
+	// 用户登录
+	@handler UserLogin
+	post /user/login(LoginRequest) returns (LoginReply)
+
+	// 用户详情
+	@handler UserDetail
+	get /user/detail (UserDetailRequest) returns (UserDetailReply)
+
+	// 验证码发送
+	@handler MailCodeSend
+	post /mail/code/send (MailCodeSendRequest) returns (MailCodeSendReply)
+}
+
+type MailCodeSendReply {
+}
+
+type MailCodeSendRequest {
+	Email string `json:"email"`
+}
+
+type LoginRequest {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type LoginReply {
+	Token string `json:"token"`
+}
+
+type UserDetailRequest {
+	Identity string `json:"identity"`
+}
+
+type UserDetailReply {
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
