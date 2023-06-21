@@ -10,5 +10,5 @@ go run core.go -f etc/core-api.yaml
 # 使用API文件生成代码
 goctl api go -api core.api -dir . -style go_zero
 # 格式化代码
-goctl api format --dir demo.api 
+goctl api format --dir core.api 
 ```

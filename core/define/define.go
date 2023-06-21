@@ -1,6 +1,9 @@
 package define
 
-import "github.com/dgrijalva/jwt-go"
+import (
+	"github.com/dgrijalva/jwt-go"
+	"time"
+)
 
 type UserClaim struct {
 	Id       int
@@ -10,3 +13,12 @@ type UserClaim struct {
 }
 
 var JwtKey = "cloud-disk-key"
+
+// CodeLength 验证码长度
+var CodeLength = 6
+
+// LoginCodePrefix 验证码前缀
+var LoginCodePrefix = "LoginCode:"
+
+// CodeExpireTime 验证码过期时间(s)
+var CodeExpireTime = 300 * time.Second
