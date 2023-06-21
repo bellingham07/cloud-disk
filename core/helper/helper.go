@@ -5,12 +5,16 @@ import (
 	"crypto/md5"
 	"crypto/tls"
 	"fmt"
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jordan-wright/email"
-	"github.com/satori/go.uuid"
+	uuid "github.com/satori/go.uuid"
 	"github.com/spf13/viper"
+	"log"
 	"math/rand"
+	"net/http"
 	"net/smtp"
+	"os"
 	"time"
 )
 
@@ -74,4 +78,39 @@ func RandCode() string {
 
 func GetUUID() string {
 	return uuid.NewV4().String()
+}
+
+func OssUpload(r *http.Request) string {
+	// 获取配置文件信息
+	config := viper.New()
+	config.SetConfigName("core-api")
+	config.SetConfigType("yaml")
+	config.AddConfigPath("../core/etc")
+	err := config.ReadInConfig()
+	if err != nil {
+		panic(fmt.Errorf("fatal error config file: %s \n", err))
+	}
+	client, err := oss.New(config.GetString("Oss.endpoint"), config.GetString("Oss.accessKeyId"), config.GetString("Oss.accessKeySecret"))
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(-1)
+	}
+
+	bucket, err := client.Bucket(config.GetString("Oss.bucketName"))
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(-1)
+	}
+
+	_, fileHeader, err := r.FormFile("file")
+
+	key := "CloudDisk/" + fileHeader.Filename
+	tempFile, _ := fileHeader.Open()
+
+	err = bucket.PutObject(key, tempFile)
+	if err != nil {
+		log.Println(err)
+	}
+
+	return "https://recommendation-c.oss-cn-beijing.aliyuncs.com/" + key
 }

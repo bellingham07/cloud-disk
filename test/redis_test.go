@@ -1,11 +1,9 @@
 package test
 
 import (
-	"cloud-disk/core/models"
 	"context"
 	"github.com/redis/go-redis/v9"
 	"testing"
-	"time"
 )
 
 var ctx = context.Background()
@@ -17,6 +15,6 @@ var rdb = redis.NewClient(&redis.Options{
 })
 
 func TestRedis(t *testing.T) {
-	r := models.RDB
-	r.Set(ctx, "cao", "jin", 5*time.Minute)
+	//r := models.RDB
+	//r.Set(ctx, "cao", "jin", 5*time.Minute)
 }

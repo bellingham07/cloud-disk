@@ -11,4 +11,6 @@ go run core.go -f etc/core-api.yaml
 goctl api go -api core.api -dir . -style go_zero
 # 格式化代码
 goctl api format --dir core.api 
+# 阿里云oss
+go get github.com/aliyun/aliyun-oss-go-sdk/oss
 ```
