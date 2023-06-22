@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/jordan-wright/email"
 	uuid "github.com/satori/go.uuid"
 	"github.com/spf13/viper"

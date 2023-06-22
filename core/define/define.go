@@ -22,3 +22,6 @@ var LoginCodePrefix = "LoginCode:"
 
 // CodeExpireTime 验证码过期时间(s)
 var CodeExpireTime = 300 * time.Second
+
+// PageSize 分页默认参数
+var PageSize = 20
