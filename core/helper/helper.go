@@ -4,9 +4,9 @@ import (
 	"cloud-disk/core/define"
 	"crypto/md5"
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/jordan-wright/email"
 	uuid "github.com/satori/go.uuid"
 	"github.com/spf13/viper"
@@ -34,6 +34,21 @@ func GenerateToken(id int, identity string, name string) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+}
+
+// AnalyzeToken token的解析
+func AnalyzeToken(token string) (*define.UserClaim, error) {
+	uc := new(define.UserClaim)
+	claims, err := jwt.ParseWithClaims(token, uc, func(token *jwt.Token) (interface{}, error) {
+		return []byte(define.JwtKey), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	if !claims.Valid {
+		return uc, errors.New("token is invalid")
+	}
+	return uc, nil
 }
 
 func MailSendCode(mail, code string) error {
