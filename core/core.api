@@ -14,6 +14,10 @@ service core-api {
 	// 用户注册
 	@handler UserRegister
 	post /user/register (UserRegisterRequest) returns (UserRegisterReply)
+
+	// 用户资源获取
+	@handler ShareBasicDetail
+	get /share/basic/detail (ShareBasicDetailRequest) returns (ShareBasicDetailReply)
 }
 
 // 需要用户认证的api
@@ -45,7 +49,43 @@ service core-api{
 	// 用户文件删除
 	@handler UserFileDelete
 	delete /user/file/delete (UserFileDeleteRequest) returns (UserFileReply)
+
+	// 用户文件移动
+	@handler UserFileRemove
+	put /user/file/remove (UserFileRemoveRequest) returns (UserFileRemoveReply)
+
+	// 创建分享记录
+	@handler ShareBasicCreate
+	post /share/basic/create (ShareBasicCreateRequest) returns(ShareBasicCreateReply)
 }
+
+type ShareBasicDetailRequest {
+	Identity string `json:"identity"`
+}
+
+type ShareBasicDetailReply {
+	RepositoryIdentity string `json:"repository_identity"`
+	Name               string `json:"name"`
+	Ext                string `json:"ext"`
+	Size               string `json:"size"`
+	Path               string `json:"path"`
+}
+
+type ShareBasicCreateRequest {
+	RepositoryIdentity string `json:"repository_identity"`
+	ExpiredTime        int    `json:"expired_time"`
+}
+
+type ShareBasicCreateReply {
+	Identity string `json:"identity"`
+}
+
+type UserFileRemoveRequest {
+	Identity       string `json:"identity"`
+	ParentIdentity string `json:"parent_identity"`
+}
+
+type UserFileRemoveReply {}
 
 type UserFileDeleteRequest {
 	Identity string `json:"identity"`

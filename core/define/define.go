@@ -25,3 +25,6 @@ var CodeExpireTime = 300 * time.Second
 
 // PageSize 分页默认参数
 var PageSize = 20
+
+// DateTime 默认时间
+var DateTime = "2006-01-02 15:04:05"
