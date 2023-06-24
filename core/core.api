@@ -64,10 +64,35 @@ service core-api{
 
 	// 刷新Authorization
 	@handler RefreshAuthorization
-		post /refresh/authorization (RefreshAuthorizationRequest) returns (RefreshAuthorizationReply)
+	post /refresh/authorization (RefreshAuthorizationRequest) returns (RefreshAuthorizationReply)
+
+	// 文件上传前基本信息处理
+	@handler FileUploadPrepare
+	post /file/upload/prepare (FileUploadPrepareRequest) returns (FileUploadPrepareReply)
+
+	// 文件分片上传
+	@handler FileSplitUpload
+	post /file/split/upload (FileSplitUploadRequest) returns (FileSplitUploadReply)
+}
+
+type FileSplitUploadRequest {}
+
+type FileSplitUploadReply {}
+
+type FileUploadPrepareRequest {
+	Md5  string `json:"md5"`
+	Name string `json:"name"`
+	Ext  string `json:"ext"`
+}
+
+type FileUploadPrepareReply {
+	Identity string `json:"identity"`
+	UploadId string `json:"upload_id"`
+	Key      string `json:"key"`
 }
 
 type RefreshAuthorizationRequest{}
+
 type RefreshAuthorizationReply {
 	Token        string `json:"token"`
 	RefreshToken string `json:"refresh_token"`

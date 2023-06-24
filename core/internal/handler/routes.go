@@ -94,6 +94,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/refresh/authorization",
 					Handler: RefreshAuthorizationHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/file/upload/prepare",
+					Handler: FileUploadPrepareHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/file/split/upload",
+					Handler: FileSplitUploadHandler(serverCtx),
+				},
 			}...,
 		),
 	)

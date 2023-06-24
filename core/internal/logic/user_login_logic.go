@@ -38,7 +38,7 @@ func (l *UserLoginLogic) UserLogin(req *types.LoginRequest) (resp *types.LoginRe
 		return nil, errors.New("用户名或密码错误")
 	}
 	// 2 生成token
-	token, err := helper.GenerateToken(user.Id, user.Identity, user.Name, 20)
+	token, err := helper.GenerateToken(user.Id, user.Identity, user.Name, define.TokenExpire)
 	if err != nil {
 		return nil, err
 	}
