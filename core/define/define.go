@@ -28,3 +28,9 @@ var PageSize = 20
 
 // DateTime 默认时间
 var DateTime = "2006-01-02 15:04:05"
+
+// RefreshTokenExpire token有效期
+var RefreshTokenExpire = 3600
+
+// TokenExpire token有效期
+var TokenExpire = 3600
